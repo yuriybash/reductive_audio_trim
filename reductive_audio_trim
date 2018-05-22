@@ -67,4 +67,4 @@ fi
 
 CMD="sox $input_file -C $bitrate_stripped $output_file trim "
 CMD="$CMD$addtl_args"
-#eval $CMD
+eval $CMD
