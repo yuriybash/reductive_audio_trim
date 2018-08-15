@@ -13,7 +13,7 @@ this is annoying.
 
 the otherwise excellent library [ffmpeg](https://github.com/FFmpeg/FFmpeg) seems to have a currently unfixed [bug](https://trac.ffmpeg.org/ticket/4950) that prevents you from passing the time ranges you want to keep.
 
-`reductive_audio_trim` allows you to pass the sections you want to remove instead.
+`reductive_audio_trim` allows you to pass the sections you want to remove instead. It uses the [sox](https://github.com/chirlu/sox) _trim_ functionality.
 
 
 ## Requirements
