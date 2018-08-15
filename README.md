@@ -1,4 +1,4 @@
-# reductive_mp3_trim
+# reductive_audio_trim
 
 It seems like most CLI tools that offer trimming/removal of sections of audio and video files
 only allow you to pass the sections you want to _keep_ as arguments -
@@ -13,7 +13,7 @@ this is annoying.
 
 the otherwise excellent library [ffmpeg](https://github.com/FFmpeg/FFmpeg) seems to have a currently unfixed [bug](https://trac.ffmpeg.org/ticket/4950) that prevents you from passing the time ranges you want to keep.
 
-`reductive_mp3_trim` allows you to pass the sections you want to remove instead.
+`reductive_audio_trim` allows you to pass the sections you want to remove instead.
 
 
 ## Requirements
@@ -21,7 +21,7 @@ the otherwise excellent library [ffmpeg](https://github.com/FFmpeg/FFmpeg) seems
 
 ## Usage
 ```
-./mp3_trim input.mp3 output.mp3 1,6 21,26
+./audio_trim input.mp3 output.mp3 11,16 24,39
 ```
 
 By default, it retains the bitrate of the input file.

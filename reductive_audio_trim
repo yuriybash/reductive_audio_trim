@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+if [ -z "$3" ]
+then
+    echo "Usage: input_file output_file ranges_to_remove"
+    echo "Example: input.mp3 output.mp3 0,100"
+    exit 1
+fi
+
+if ! type sox  > /dev/null; then
+    echo "Error: sox must be installed to proceed"
+    exit 1
+fi
+
+input_file=$1
+output_file=$2
+duration=$( sox --info -D "$input_file")
+duration_stripped=${duration%.*}
+bitrate=$( sox --info -B "$input_file")
+bitrate_stripped="${bitrate//k}"
+
+base_cmd="sox $input_file -C $bitrate_stripped $output_file trim "
+
+shift 2
+addtl_args=""
+initial="$(cut -d',' -f1 <<<${@})"
+
+if [ $initial != 0 ]
+then
+    addtl_args="$addtl_args =0"
+fi
+
+for i in "${@}"; do
+    IFS=',' read -ra RANGE <<< "$i"
+    start=${RANGE[0]}
+    end=${RANGE[1]}
+
+    if [ $start != 0 ]
+    then
+        addtl_args="$addtl_args =$start"
+    fi
+
+    if [ $end != $duration_stripped ]
+    then
+        addtl_args="$addtl_args =$end"
+    fi
+
+done
+
+last="$(echo ${@} | rev | cut -d',' -f 1 | rev)"
+
+if [ $last != $duration_stripped ]
+then
+    addtl_args="$addtl_args =$duration_stripped"
+fi
+
+CMD="$base_cmd$addtl_args"
+
+eval $CMD
