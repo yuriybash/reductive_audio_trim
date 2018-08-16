@@ -21,7 +21,7 @@ input_file=$1
 output_file=$2
 shift 2
 
-if [[ $1 == '--bitrate' ]]
+if [[ $1 =~ ^('--bitrate'|'--b')$ ]]
 then
     bitrate_stripped=$2
     shift 2
@@ -67,4 +67,4 @@ fi
 
 base_cmd="sox $input_file -C $bitrate_stripped $output_file trim "
 CMD="$base_cmd$addtl_args"
-eval $CMD
+#eval $CMD
