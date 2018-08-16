@@ -2,8 +2,8 @@
 
 function usage
 {
-    echo "Usage: $0 [--version] output_file ranges_to_remove"
-    echo "Example: input.mp3 output.mp3 0,100"
+    echo "    Usage: $0 input_file output_file [--bitrate bitrate] <range> <range> ..."
+    echo "    Example: input.mp3 output.mp3 --bitrate 50 0,100 200,300"
 }
 
 if [ -z "$3" ]
@@ -19,14 +19,20 @@ fi
 
 input_file=$1
 output_file=$2
+shift 2
+
+if [[ $1 == '--bitrate' ]]
+then
+    bitrate_stripped=$2
+    shift 2
+else
+    bitrate=$( sox --info -B "$input_file")
+    bitrate_stripped="${bitrate//k}"
+fi
+
+
 duration=$( sox --info -D "$input_file")
 duration_stripped=${duration%.*}
-bitrate=$( sox --info -B "$input_file")
-bitrate_stripped="${bitrate//k}"
-
-base_cmd="sox $input_file -C $bitrate_stripped $output_file trim "
-
-shift 2
 addtl_args=""
 initial="$(cut -d',' -f1 <<<${@})"
 
@@ -59,6 +65,6 @@ then
     addtl_args="$addtl_args =$duration_stripped"
 fi
 
+base_cmd="sox $input_file -C $bitrate_stripped $output_file trim "
 CMD="$base_cmd$addtl_args"
-
 eval $CMD
