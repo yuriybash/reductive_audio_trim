@@ -65,6 +65,6 @@ then
     addtl_args="$addtl_args =$duration_stripped"
 fi
 
-base_cmd="sox $input_file -C $bitrate_stripped $output_file trim "
-CMD="$base_cmd$addtl_args"
+CMD="sox $input_file -C $bitrate_stripped $output_file trim "
+CMD="$CMD$addtl_args"
 #eval $CMD
