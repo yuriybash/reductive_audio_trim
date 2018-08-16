@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
+function usage
+{
+    echo "Usage: $0 [--version] output_file ranges_to_remove"
+    echo "Example: input.mp3 output.mp3 0,100"
+}
+
 if [ -z "$3" ]
 then
-    echo "Usage: input_file output_file ranges_to_remove"
-    echo "Example: input.mp3 output.mp3 0,100"
+    usage
     exit 1
 fi
 
